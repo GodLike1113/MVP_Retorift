@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion 28
+  resourcePrefix 'lottie_'
+
+  defaultConfig {
+    minSdkVersion 16
+    targetSdkVersion 28
+  }
+  lintOptions {
+    abortOnError true
+    textReport true
+    textOutput 'stdout'
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  testOptions {
+    unitTests {
+      includeAndroidResources = true
+    }
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    debug {
+      debuggable true
+    }
+
+    dev{
+      debuggable true
+    }
+
+    prod_debug.initWith(debug)
+    debugRelease.initWith(release)
+    prod_release.initWith(release)
+    debugTest.initWith(debug)
+    pre_release.initWith(release)
+    pay_debug.initWith(debug)
+  }
+}
+
+dependencies {
+  implementation "androidx.appcompat:appcompat:1.1.0"
+  testImplementation "org.mockito:mockito-core:2.15.0"
+  testImplementation 'junit:junit:4.12'
+  testImplementation "org.robolectric:robolectric:4.2.1"
+  // Do not ugprade to 2.0 because it will bring in Kotlin as a transitive dependency.
+  implementation("com.squareup.okio:okio:1.17.4")
+  annotationProcessor "com.uber.nullaway:nullaway:0.7.5"
+}
